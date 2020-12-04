@@ -22,6 +22,7 @@ public class Task1 implements Task {
   private List<Person> findOrderedPersons(List<Integer> personIds) {
     Set<Person> persons = PersonService.findPersons(personIds);
 
+    //O(n)
     return persons.stream()
             .sorted(Comparator.comparingInt(Person::getId))
             .collect(Collectors.toList());
