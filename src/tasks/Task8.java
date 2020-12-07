@@ -29,8 +29,7 @@ public class Task8 implements Task {
 //    persons.remove(0);
 //    return persons.stream().map(Person::getFirstName).collect(Collectors.toList());
 
-    return persons.isEmpty() ? Collections.emptyList() :
-            persons.stream()
+    return persons.stream()
                     .skip(1)
                     .map(Person::getFirstName)
                     .collect(Collectors.toList());
@@ -67,7 +66,7 @@ public class Task8 implements Task {
             .collect(Collectors.joining(" "));
   }
 
-  // ее словарь id персоны -> имя
+  // словарь id персоны -> ее имя
   public Map<Integer, String> getPersonNames(Collection<Person> persons) {
 //    Map<Integer, String> map = new HashMap<>(1);
 //    for (Person person : persons) {
@@ -78,7 +77,7 @@ public class Task8 implements Task {
 //    return map;
 
     return persons.stream()
-            .collect(Collectors.toMap(Person::getId, this::convertPersonToString));
+            .collect(Collectors.toMap(Person::getId, this::convertPersonToString, (a, b) -> a));
   }
 
   // есть ли совпадающие в двух коллекциях персоны?
@@ -93,7 +92,8 @@ public class Task8 implements Task {
 //    }
 //    return has;
 
-    return !Collections.disjoint(persons1, persons2);
+//    return !Collections.disjoint(persons1, persons2);
+    return persons1.stream().anyMatch(persons2::contains);
   }
 
   //...

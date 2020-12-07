@@ -4,9 +4,10 @@ import common.Person;
 import common.PersonService;
 import common.Task;
 
-import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /*
@@ -22,9 +23,11 @@ public class Task1 implements Task {
   private List<Person> findOrderedPersons(List<Integer> personIds) {
     Set<Person> persons = PersonService.findPersons(personIds);
 
-    //O(n)
-    return persons.stream()
-            .sorted(Comparator.comparingInt(Person::getId))
+    Map<Integer, Person> idToPersons = persons.stream()
+            .collect(Collectors.toMap(Person::getId, Function.identity()));
+
+    return personIds.stream()
+            .map(idToPersons::get)
             .collect(Collectors.toList());
   }
 
